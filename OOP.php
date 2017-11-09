@@ -1,91 +1,79 @@
 <?php
-	abstract class Kendaraan{
-		abstract public function jenisKendaraan();
-		abstract public function merk();
-		abstract public function tahunPembuatan();
-	}
-
-	class RodaDua extends Kendaraan
-	{
+	
+	class Kendaraan{
 		public $jenKen;
 		public $manFaktur;
 		public $tahun;
 		public $merk;
 
-		function __construct($jenis,$mrk,$manufac,$thn){
-			$this->jenKen=$jenis;
-			$this->manFaktur=$manufac;
+		public function setDetailKen($jenis,$merk,$manFac,$thn){
+			$this->jenken=$jenis;
+			$this->merk=$merk;
+			$this->manFaktur=$manFac;
 			$this->tahun=$thn;
-			$this->merk=$mrk;
+		}
+		public function getDetailKen(){
+			echo "Jenis kendaraan : <b>".$this->jenKen."</b><br> Merk/type Kendaraan : <b>".$this->merk."</b><br> Tempat Pembuatan : <b>".$this->manFaktur." </b><br> Tahun Pembuatan : <b>".$this->tahun."</b><br>";
+		}
+	}
+	class RodaDua extends Kendaraan
+	{
+		public $warna;
+		public $silinder;
+		
+		function __construct(){
+			
+			$this->jenKen="Motor";
+			$this->merk="Yamaha";
+			$this->manFaktur="Jepang";
+			$this->tahun=2017;
+			$this->getDetailKen();
 		}
 		
-		public function jenisKendaraan(){
-			echo "Jenis Kendaraan : <b>".$this->jenKen."</b><br>";
-		}
-
-		public function merk(){
-				echo "Merk/Tipe Kendaraan : <b>".$this->merk."</b><br>";
-		}
-
-		public function manufactur(){
-			echo "Tempat Pembuatan : <b>".$this->manFaktur."</b><br>";
-		}
-		public function tahunPembuatan(){
-			echo "Tahun Pembuatan : <b>".$this->tahun."</b><br>";
-		}
-		public function warna(){
-			echo "Warna Kendaraan : <b> Merah </b><br>";
-		}
-		public function silinder(){
-			echo "Isi Silinder (cc) : <b> 135 </b>cc <br>";
+		public function detMotor(){
+			$this->warna="Merah";
+			$this->silinder=135;
+			echo "Warna Kendaraan : <b>".$this->warna."</b><br> Isi Silinder : <b>".$this->silinder."</b> CC <br>";
 		}
 	}
 
 	class spekMotor extends RodaDua implements kepemilikan,kegunaan
 	{
-		public $kepMil;
-		public $kendara;
-		public $cepat;
-		function __construct($kepMili,$kendaraan,$cepatan){
-
-			$this->kepMil=$kepMili;
-			$this->kendara=$kendaraan;
-			$this->cepat=$cepatan;
+		
+		function __construct(){
+			
+			$this->milik("Imam Fahmi Fadillah");
+			parent::__construct();
+			parent::detMotor();
+			$this->berkendara("Bekerja");
+			$this->kecepatan(120);
+		}
+		
+		public function milik($mlk){
+			
+			echo "<br>Kepemilikan Atas Nama : <b>$mlk</b><br>";
+		}
+		
+		public function berkendara($ken){
+			echo "Digunakan : <b>$ken</b><br>";
 		}
 
-		public function milik(){
-			echo "<br>Nama Pemilik Kendaraan : <b>".$this->kepMil."</b><br>";
-		}
-		public function berkendara(){
-			echo " Digunakan untuk : <b> ".$this->kendara."</b><br>";
-		}
-		public function kecepatan(){
-			echo " Kecepatan Maksimal : <b> ".$this->cepat."</b> km/jam<br>";
+		public function kecepatan($cepat){
+			echo "Kecepatan Maksimal : <b>$cepat</b>";
 		}
 	}
 
 	interface kegunaan{
-		public function berkendara();
-		public function kecepatan();
+		public function berkendara($kenDar);
+		public function kecepatan($kec);
 	}
 
 	interface kepemilikan{
-		public function milik();
+		public function milik($mil);
 	}
 
-	$roda= new RodaDua("Motor","Yamaha","Jepang",2012);
-	$roda->jenisKendaraan();
-	$roda->merk();
-	$roda->manufactur();
-	$roda->tahunPembuatan();
-
-	$spek = new spekMotor("Imam Fahmi Fadillah","Bekerja",120);
-	$spek->milik();
-	$roda->jenisKendaraan();
-	$roda->merk();
-	$roda->tahunPembuatan();
-	$spek->berkendara();
-	$spek->kecepatan();
-	$spek->warna();
-	$spek->silinder();
+	$roda= new RodaDua();
+	
+	$spek = new spekMotor();
+	
 ?>
